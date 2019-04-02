@@ -384,7 +384,9 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
         let childController = viewControllers[indexPath.item] as! IndicatorInfoProvider // swiftlint:disable:this force_cast
         let indicatorInfo = childController.indicatorInfo(for: self)
 
-        cell.accessibilityLabel = indicatorInfo.accessibilityLabel
+        cell.accessibilityLabel = indicatorInfo.accessibilityLabel ?? cell.titleLabel.text
+        cell.isAccessibilityElement = true
+        cell.accessibilityTraits.insert([.button, .header])
 
         cell.titleLabel.text = indicatorInfo.title
         cell.titleLabel.font = settings.style.buttonBarItemTitleFont
@@ -402,12 +404,6 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
         } else {
             self.styleUnselectedCell(cell)
         }
-        
-        //de160311fc94d96ae159e2966b84a252a6aa1ba8
-
-        //cell.label.text = indicatorInfo.title
-        //cell.label.font = settings.style.buttonBarItemFont
-        //cell.label.textColor = settings.style.buttonBarItemTitleColor ?? cell.label.textColor
 
         cell.contentView.backgroundColor = settings.style.buttonBarItemBackgroundColor ?? cell.contentView.backgroundColor
         cell.backgroundColor = settings.style.buttonBarItemBackgroundColor ?? cell.backgroundColor
@@ -431,10 +427,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
                 changeCurrentIndex(currentIndex == indexPath.item ? nil : cell, currentIndex == indexPath.item ? cell : nil, false)
             }
         }
-        cell.isAccessibilityElement = true
-        // de160311fc94d96ae159e2966b84a252a6aa1ba8
-        cell.accessibilityLabel = indicatorInfo.accessibilityLabel ?? cell.label.text
-        cell.accessibilityTraits.insert([.button, .header])
+        
         return cell
     }
 
