@@ -57,12 +57,13 @@ public struct ButtonBarPagerTabStripSettings {
         public var buttonBarItemCounterFont = UIFont.systemFont(ofSize: 18)
         public var buttonBarItemLeftRightMargin: CGFloat = 20
         public var buttonBarItemTitleColor: UIColor?
+
         public var buttonBarItemCounterColor: UIColor?
         
         public var buttonBarItemUnselectedTitleColor: UIColor?
         public var buttonBarItemUnselectedCounterColor: UIColor?
         
-        @available(*, deprecated: 7.0.0) public var buttonBarItemsShouldFillAvailiableWidth: Bool {
+		@available(*, deprecated) public var buttonBarItemsShouldFillAvailiableWidth: Bool {
             set {
                 buttonBarItemsShouldFillAvailableWidth = newValue
             }
@@ -402,6 +403,12 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
             self.styleUnselectedCell(cell)
         }
         
+        //de160311fc94d96ae159e2966b84a252a6aa1ba8
+
+        //cell.label.text = indicatorInfo.title
+        //cell.label.font = settings.style.buttonBarItemFont
+        //cell.label.textColor = settings.style.buttonBarItemTitleColor ?? cell.label.textColor
+
         cell.contentView.backgroundColor = settings.style.buttonBarItemBackgroundColor ?? cell.contentView.backgroundColor
         cell.backgroundColor = settings.style.buttonBarItemBackgroundColor ?? cell.backgroundColor
         
@@ -425,7 +432,8 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
             }
         }
         cell.isAccessibilityElement = true
-        cell.accessibilityLabel = cell.titleLabel.text
+        // de160311fc94d96ae159e2966b84a252a6aa1ba8
+        cell.accessibilityLabel = indicatorInfo.accessibilityLabel ?? cell.label.text
         cell.accessibilityTraits.insert([.button, .header])
         return cell
     }
